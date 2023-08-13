@@ -1,5 +1,4 @@
 export const getTokenFromLocalStorage = () => {
-
     try {
       const serializedState = window.localStorage.getItem("token");
       if (serializedState === null) {

@@ -198,47 +198,13 @@ const EditEmployee = () => {
                 Cancel
               </Button>
             </Box>
-          </Stack>
-          {/* <label>Name</label>
-            <Field
-              name="firstName"
-              component="input"
-              placeholder="First Name"
-            /> */}
-
-          {/* <label>Interests</label> */}
-          {/* <Field name="interests" component={CustomTextField} /> */}
-
-          {/* <Field
-            name="bio"
-            render={({ input, meta }) => (
-              <div>
-                <label>Bio</label>
-                <textarea {...input} />
-                {meta.touched && meta.error && <span>{meta.error}</span>}
-              </div>
-            )}
-          /> */}
-          {/* {JSON.stringify(cafeList)} */}
-
-          {/* <h2>Render Function as Children</h2>
-          <Field name="phone">
-            {({ input, meta }) => (
-              <div>
-                <label>Phone</label>
-                <input type="text" {...input} placeholder="Phone" />
-                {meta.touched && meta.error && <span>{meta.error}</span>}
-              </div>
-            )}
-          </Field> */}
-          {/* {JSON.stringify(mappedCafeList)} */}
+          </Stack>          
         </form>
       )}
     />
   );
   return (
-    <>
-      
+    <>      
       {alertState.showAlert && (
         <AlertBox
           showAlert={alertState.showAlert}

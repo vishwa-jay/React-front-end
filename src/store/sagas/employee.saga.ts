@@ -16,6 +16,9 @@ import {
   updateEmployeeSucceeded,
 } from "../actions/employeeAction";
 
+/**
+ * Get paginated list of employee deftails by cafe id
+ */
 function* GetEmployeesByCafeAPISaga(
   payload: ReturnType<typeof getEmployeeList>
 ): any {
@@ -31,6 +34,9 @@ function* GetEmployeesByCafeAPISaga(
   }
 }
 
+/**
+ * Create employee.
+ */
 function* CreateEmployeeAPISaga( payload: ReturnType<typeof createEmployee>): any{
   try {
     const { data } = yield call(CreateEmployeeAPI, payload.payload.employee);
@@ -44,6 +50,9 @@ function* CreateEmployeeAPISaga( payload: ReturnType<typeof createEmployee>): an
   }
 }
 
+/**
+ * Create employee details by id.
+ */
 function* GetEmployeeAPISaga(payload: ReturnType<typeof findEmployee>){
   try {
     const { data } = yield call(GetEmployeeAPI, payload.payload.id);
@@ -57,6 +66,9 @@ function* GetEmployeeAPISaga(payload: ReturnType<typeof findEmployee>){
   }
 }
 
+/**
+ * Update employee.
+ */
 function* UpdateEmployeeAPISaga( payload: ReturnType<typeof updateEmployee>): any{
   try {
     const { data } = yield call(UpdateEmployeeAPI, payload.payload.employee);

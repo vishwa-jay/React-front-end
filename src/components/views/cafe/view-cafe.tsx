@@ -26,7 +26,7 @@ const ViewCafe = () => {
         color="primary"
         onClick={() => navigate(`${VIEW_EMPLOYEE_ROUTE}/${value.data.id}`)}
       >
-        {value.data.employeecount} {`${value.data.employeecount == 1 ? "Employee": "Employees"}`}
+        {value.data.employeecount} {`${value.data.employeecount === 1 ? "Employee": "Employees"}`}
       </Button>
     );
   });

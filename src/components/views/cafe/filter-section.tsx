@@ -1,9 +1,8 @@
 import { Form } from "react-final-form";
 import CustomTextField from "../../custom-text-field/custome-text-field";
-import { Button, IconButton, Stack } from "@mui/material";
+import { IconButton, Stack } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import ClearIcon from "@mui/icons-material/Clear";
-import { useState } from "react";
 
 export interface FilterProps {
   location: string;
@@ -32,7 +31,6 @@ const FilterSection = (props: FilterSectionProps) => {
         <form onSubmit={handleSubmit}>
           <Stack direction="row" spacing={1}>
             <CustomTextField name="location" label="Location" />
-
             <IconButton color="primary" type="submit" aria-label="filter">
               <SearchIcon />
             </IconButton>

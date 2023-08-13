@@ -34,6 +34,9 @@ function* getCafeAllListAPISaga() {
   }
 }
 
+/**
+ * Create cafe.
+ */
 function* CreateCafeAPISaga( payload: ReturnType<typeof createCafe>): any{
   try {
     const { data } = yield call(CreateCafeAPI, payload.payload.cafe);
@@ -47,6 +50,9 @@ function* CreateCafeAPISaga( payload: ReturnType<typeof createCafe>): any{
   }
 }
 
+/**
+ * Get cafe by id for editing purpose.
+ */
 function* GetCafeAPISaga(payload: ReturnType<typeof findCafe>){
   try {
     const { data } = yield call(GetCafeAPI, payload.payload.id);
@@ -60,6 +66,9 @@ function* GetCafeAPISaga(payload: ReturnType<typeof findCafe>){
   }
 }
 
+/**
+ * Update cafe.
+ */
 function* UpdateCafeAPISaga( payload: ReturnType<typeof updateCafe>): any{
   try {
     const { data } = yield call(UpdateCafeAPI, payload.payload.cafe);

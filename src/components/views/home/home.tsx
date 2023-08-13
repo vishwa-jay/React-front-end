@@ -1,9 +1,7 @@
-import { Box, Button, Stack } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Box, Stack } from "@mui/material";
 
 const Home = () => {
-    const navigate = useNavigate();
-
+   
   return (
     <Box>
       <Stack
