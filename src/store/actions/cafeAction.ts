@@ -17,6 +17,10 @@ export enum CafeActionTypes {
   CAFE_UPDATE_SUCCESS = "cafe/CAFE_UPDATE_SUCCESS",
   CAFE_UPDATE_ERROR = "cafe/CAFE_UPDATE_ERROR",
 
+  CAFE_DELETE_REQUEST = "cafe/CAFE_DELETE_REQUEST",
+  CAFE_DELETE_SUCCESS = "cafe/CAFE_DELETE_SUCCESS",
+  CAFE_DELETE_ERROR = "cafe/CAFE_DELETE_ERROR",
+
   CAFE_FIND_REQUEST = "cafe/CAFE_FIND_REQUEST",
   CAFE_FIND_SUCCESS = "cafe/CAFE_FIND_SUCCESS",
   CAFE_FIND_ERROR = "cafe/CAFE_FIND_ERROR",
@@ -96,3 +100,19 @@ export const updateCafeSucceeded = (action: any) => ({
   payload: action.payload,
   type: CafeActionTypes.CAFE_UPDATE_SUCCESS,
 });
+
+export const deleteCafe = (cafeId: string) => ({
+  payload: { cafeId },
+  type: CafeActionTypes.CAFE_DELETE_REQUEST,
+});
+
+export const deleteCafeFailed = (payload: any) => ({
+  payload: payload,
+  type: CafeActionTypes.CAFE_DELETE_ERROR,
+});
+
+export const deleteCafeSucceeded = (action: any) => ({
+  payload: action.payload,
+  type: CafeActionTypes.CAFE_DELETE_SUCCESS,
+});
+

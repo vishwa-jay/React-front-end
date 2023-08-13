@@ -15,40 +15,40 @@ import { CafeActionTypes } from "../actions/cafeAction";
       }
       case CafeActionTypes.CAFE_FETCH_SUCCESS: {
         console.log("action payload", action.payload);
-        return { ...state, loading: false, response: action.payload };
+        return { ...state, loading: false, response: action.payload, errors: undefined };
       }
       case CafeActionTypes.CAFE_FETCH_ERROR: {
-        return { ...state, loading: false, errors: action.payload };
+        return { ...state, loading: false, errors: action.payload.response.data.message };
       }
       case CafeActionTypes.CAFE_ALL_FETCH_REQUEST: {
         return { ...state, loading: true };
       }
       case CafeActionTypes.CAFE_ALL_FETCH_SUCCESS: {
         console.log("action payload", action.payload);
-        return { ...state, loading: false, response: action.payload };
+        return { ...state, loading: false, response: action.payload, errors: undefined };
       }
       case CafeActionTypes.CAFE_ALL_FETCH_ERROR: {
-        return { ...state, loading: false, errors: action.payload };
+        return { ...state, loading: false, errors: action.payload.response.data.message };
       }
       case CafeActionTypes.CAFE_CREATE_REQUEST: {
         return { ...state, loading: true };
       }
       case CafeActionTypes.CAFE_CREATE_SUCCESS: {
         console.log("action payload", action.payload);
-        return { ...state, loading: false, response: action.payload };
+        return { ...state, loading: false, response: action.payload, errors: undefined };
       }
       case CafeActionTypes.CAFE_CREATE_ERROR: {
-        return { ...state, loading: false, errors: action.payload };
+        return { ...state, loading: false, errors: action.payload.response.data.message };
       }
       case CafeActionTypes.CAFE_FIND_REQUEST: {
         return { ...state, loading: true };
       }
       case CafeActionTypes.CAFE_FIND_SUCCESS: {
         console.log("action payload", action.payload);
-        return { ...state, loading: false, response: action.payload };
+        return { ...state, loading: false, response: action.payload, errors: undefined };
       }
       case CafeActionTypes.CAFE_FIND_ERROR: {
-        return { ...state, loading: false, errors: action.payload };
+        return { ...state, loading: false, errors: action.payload.response.data.message };
       }
       case CafeActionTypes.CAFE_UPDATE_REQUEST: {
         return { ...state, loading: true };
@@ -58,6 +58,16 @@ import { CafeActionTypes } from "../actions/cafeAction";
         return { ...state, loading: false, response: action.payload, errors: undefined };
       }
       case CafeActionTypes.CAFE_UPDATE_ERROR: {
+        return { ...state, loading: false, errors: action.payload.response.data.message };
+      }
+      case CafeActionTypes.CAFE_DELETE_REQUEST: {
+        return { ...state, loading: true };
+      }
+      case CafeActionTypes.CAFE_DELETE_SUCCESS: {
+        console.log("action payload", action.payload);
+        return { ...state, loading: false, response: action.payload, errors: undefined };
+      }
+      case CafeActionTypes.CAFE_DELETE_ERROR: {
         return { ...state, loading: false, errors: action.payload.response.data.message };
       }
       default: {

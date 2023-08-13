@@ -15,7 +15,7 @@ const employeeReducer: Reducer<EmployeeState> = (state = initialState, action) =
     }
     case EmployeeActionTypes.EMPLOYEE_FETCH_SUCCESS: {
       console.log("action payload", action.payload);
-      return { ...state, loading: false, response: action.payload };
+      return { ...state, loading: false, response: action.payload, errors: undefined };
     }
     case EmployeeActionTypes.EMPLOYEE_FETCH_ERROR: {
       return { ...state, loading: false, errors: action.payload };
@@ -25,17 +25,17 @@ const employeeReducer: Reducer<EmployeeState> = (state = initialState, action) =
     }
     case EmployeeActionTypes.EMPLOYEE_CREATE_SUCCESS: {
       console.log("action payload", action.payload);
-      return { ...state, loading: false, response: action.payload };
+      return { ...state, loading: false, response: action.payload, errors: undefined };
     }
     case EmployeeActionTypes.EMPLOYEE_CREATE_ERROR: {
-      return { ...state, loading: false, errors: action.payload };
+      return { ...state, loading: false, errors: action.payload.response.data.message };
     }
     case EmployeeActionTypes.EMPLOYEE_FIND_REQUEST: {
       return { ...state, loading: true };
     }
     case EmployeeActionTypes.EMPLOYEE_FIND_SUCCESS: {
       console.log("action payload", action.payload);
-      return { ...state, loading: false, response: action.payload };
+      return { ...state, loading: false, response: action.payload, errors: undefined };
     }
     case EmployeeActionTypes.EMPLOYEE_FIND_ERROR: {
       return { ...state, loading: false, errors: action.payload };

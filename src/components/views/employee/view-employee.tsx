@@ -44,7 +44,7 @@ const ViewEmployee = () => {
     { field: "phone",width: 120,  },
     { field: "gender",width: 100, },
     { field: "cafename", headerName: "Cafe", width: 120},
-    { field: "workeddays", headerName: "Days Worked", width: 50},
+    { field: "workeddays", headerName: "Days Worked", width: 150},
     {
       field: "",
       width: 130,
@@ -84,7 +84,7 @@ const ViewEmployee = () => {
           cols={columns}
           rows={employeeList.response?.data}
           tableHeight={450}
-          tableWidth={1350}
+          tableWidth={1400}
         />
       </Box>
       <Box mt={2}>

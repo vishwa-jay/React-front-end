@@ -1,6 +1,6 @@
 import { all, call, put, takeLatest } from "redux-saga/effects";
-import { CreateCafeAPI, GetAllCafeListAPI, GetCafeAPI, GetCafeListAPI, UpdateCafeAPI } from "../../services/apiMethods";
-import { CafeActionTypes, createCafe, createCafeFailed, createCafeSucceeded, findCafe, findCafeFailed, findCafeSucceeded, getCafeAllListFailed, getCafeAllListSucceeded, getCafeList, getCafeListFailed, getCafeListSucceeded, updateCafe, updateCafeFailed, updateCafeSucceeded } from "../actions/cafeAction";
+import { CreateCafeAPI, DeleteCafeAPI, GetAllCafeListAPI, GetCafeAPI, GetCafeListAPI, UpdateCafeAPI } from "../../services/apiMethods";
+import { CafeActionTypes, createCafe, createCafeFailed, createCafeSucceeded, deleteCafe, deleteCafeFailed, deleteCafeSucceeded, findCafe, findCafeFailed, findCafeSucceeded, getCafeAllListFailed, getCafeAllListSucceeded, getCafeList, getCafeListFailed, getCafeListSucceeded, updateCafe, updateCafeFailed, updateCafeSucceeded } from "../actions/cafeAction";
 
 /**
  * Get paginated cafe list.
@@ -82,13 +82,30 @@ function* UpdateCafeAPISaga( payload: ReturnType<typeof updateCafe>): any{
   }
 }
 
+/**
+ * Delete cafe.
+ */
+function* DeleteCafeAPISaga( payload: any): any{debugger
+  try {
+    const { data } = yield call(DeleteCafeAPI, payload.payload.cafeId);
+    yield put(
+      deleteCafeSucceeded({
+        payload: data,
+      })
+    );
+  } catch (e) {
+    yield put(deleteCafeFailed(e));
+  }
+}
+
 function* cafeSaga() {
   yield all([
     takeLatest(CafeActionTypes.CAFE_FETCH_REQUEST, GetCafeListAPISaga),
     takeLatest(CafeActionTypes.CAFE_ALL_FETCH_REQUEST, getCafeAllListAPISaga),
     takeLatest(CafeActionTypes.CAFE_CREATE_REQUEST, CreateCafeAPISaga),
     takeLatest(CafeActionTypes.CAFE_FIND_REQUEST, GetCafeAPISaga),
-    takeLatest(CafeActionTypes.CAFE_UPDATE_REQUEST, UpdateCafeAPISaga)
+    takeLatest(CafeActionTypes.CAFE_UPDATE_REQUEST, UpdateCafeAPISaga),
+    takeLatest(CafeActionTypes.CAFE_DELETE_REQUEST, DeleteCafeAPISaga)
   ]);
 }
 

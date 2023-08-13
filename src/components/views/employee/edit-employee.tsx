@@ -21,6 +21,7 @@ import {
   MIN_MAX_LENGHT_MSG,
   MIN_TEXT_LENGHT,
   REQUIRED_MSG,
+  defaultAlertValue,
   genderList,
 } from "../../../constants/common";
 import { useNavigate, useParams } from "react-router";
@@ -42,16 +43,12 @@ const EditEmployee = () => {
   const routeParams = useParams();
   const navigate = useNavigate();
   const employeeState = useSelector((state: AppState) => state.employee);
-  const [alertState, setAlertState] = useState<AlertBoxProps>({
-    message: "",
-    severity: "info",
-    showAlert: false,
-  });
+  const [alertState, setAlertState] = useState<AlertBoxProps>(defaultAlertValue);
 
   const isEmployeeEdit =
     routeParams.id && routeParams.id.length > 0 ? true : false;
 
-  const selectedEmployee = employeeState.response
+  const selectedEmployee = employeeState.response && isEmployeeEdit
     ? employeeState.response.data[0]
     : undefined;
 
@@ -63,9 +60,9 @@ const EditEmployee = () => {
     //Success and error message settings for alert
     if (employeeState.response && !employeeState.errors) {
       setAlertState({
+        ...alertState,
         message: employeeState.response.message,
         severity: "success",
-        showAlert: true,
       });
     } else if (employeeState.errors) {
       setAlertState({
@@ -99,6 +96,7 @@ const EditEmployee = () => {
       cafe_id: e.cafe_id || "",
     };
 
+    setAlertState({...alertState, showAlert: true});
     if (routeParams.id && routeParams.id.length > 0) {
       dispatch(updateEmployee(newEmployeeData));
     } else {

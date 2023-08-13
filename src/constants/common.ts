@@ -1,7 +1,15 @@
+import { AlertBoxProps } from "../components/alert/alert-box";
+
 export const genderList = [
   { key: "male", value: "male", label: "Male" },
   { key: "female", value: "female", label: "Female" },
 ];
+
+export const defaultAlertValue : AlertBoxProps= {
+  message: "",
+  severity: "info",
+  showAlert: false,
+};
 
 export const DATE_FORMAT ='yyyy-MM-dd';
 

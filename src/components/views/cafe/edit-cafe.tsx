@@ -11,6 +11,7 @@ import {
   MIN_MAX_LENGHT_MSG,
   MIN_TEXT_LENGHT,
   REQUIRED_MSG,
+  defaultAlertValue,
 } from "../../../constants/common";
 import {
   checkStringMaxLength,
@@ -31,17 +32,12 @@ const EditCafe = () => {
   const routeParams = useParams();
   const navigate = useNavigate();
   const cafeState = useSelector((state: AppState) => state.cafe);
-  const [alertState, setAlertState] = useState<AlertBoxProps>({
-    message: "",
-    severity: "info",
-    showAlert: false,
-  });
+  const [alertState, setAlertState] = useState<AlertBoxProps>(defaultAlertValue);
 
   const isCafeEdit = routeParams.id && routeParams.id.length > 0 ? true : false;
 
-  const selectedCafe = cafeState.response
-    ? cafeState.response.data[0]
-    : undefined;
+  const selectedCafe =
+    cafeState.response && isCafeEdit ? cafeState.response.data[0] : undefined;
 
   useEffect(() => {
     if (cafeState.loading) {
@@ -51,9 +47,10 @@ const EditCafe = () => {
     //Success and error message settings for alert
     if (cafeState.response && !cafeState.errors) {
       setAlertState({
+        ...alertState,
         message: cafeState.response.message,
         severity: "success",
-        showAlert: true,
+        
       });
     } else if (cafeState.errors) {
       setAlertState({
@@ -77,7 +74,8 @@ const EditCafe = () => {
       logo: e.logo || "",
       location: e.location,
     };
-
+    
+    setAlertState({...alertState, showAlert: true});
     if (routeParams.id && routeParams.id.length > 0) {
       dispatch(updateCafe(newCafeData));
     } else {

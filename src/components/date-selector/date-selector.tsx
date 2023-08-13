@@ -1,6 +1,7 @@
 import DatePicker from "react-datepicker";
 import { Field } from "react-final-form";
 import { DateInputStyles } from "./date-selector.styles";
+import { formatDate } from "../../utils/common";
 
 interface DateSelectorProps {
   name: string;
@@ -18,8 +19,8 @@ const DateSelector = (props: DateSelectorProps) => {
           <DateInputStyles>
             <DatePicker
               name={name}
-              value={props.input.value}
-              onChange={props.input.onChange}              
+              value={formatDate(props.input.value || new Date())}
+              onChange={props.input.onChange}            
             />
           </DateInputStyles>
           {props.meta.touched && props.meta.error && <span className="errorfield">{props.meta.error}</span>}

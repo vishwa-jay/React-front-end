@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { getCafeList } from "../../../store/actions/cafeAction";
+import { deleteCafe, getCafeList } from "../../../store/actions/cafeAction";
 import { useEffect, useState } from "react";
 import { AppState } from "../../../store/reducers/rootReducer";
 import DataTable from "../../data-table/data-table.component";
@@ -12,12 +12,18 @@ import {
 } from "../../../constants/routes";
 import FilterSection, { FilterProps } from "./filter-section";
 import Pagination from "@mui/material/Pagination";
+import ConfirmModal from "../../modal/confirm-modal";
+import AlertBox, { AlertBoxProps } from "../../alert/alert-box";
+import { defaultAlertValue } from "../../../constants/common";
 
 const ViewCafe = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const cafeList = useSelector((state: AppState) => state.cafe);
+
   const [cafeParams, setCafeParams] = useState({ location: "", page: 1 });
+  const [openDeleteConfirmation, setOpenDeleteConfirmation] = useState({open: false, id: ""});
+  const [alertState, setAlertState] = useState<AlertBoxProps>(defaultAlertValue);
 
   const GoToEmployees = React.memo((value: any) => {
     return (
@@ -46,7 +52,8 @@ const ViewCafe = () => {
 
   const DeleteCafe = React.memo((value: any) => {
     return (
-      <Button variant="contained" color="error" size="small">
+      <Button variant="contained" color="error" size="small" 
+      onClick={() => setOpenDeleteConfirmation({open: true, id: value.data.id})}>
         Delete
       </Button>
     );
@@ -81,11 +88,48 @@ const ViewCafe = () => {
     setCafeParams({ ...cafeParams, page: page });
   }
 
+  const handleConfirm = (confirmation: boolean) =>{console.log(confirmation);   
+    if(confirmation === true){
+      setAlertState({...alertState, showAlert: true});
+      dispatch(deleteCafe(openDeleteConfirmation.id));
+    }
+    setOpenDeleteConfirmation({...openDeleteConfirmation, open: false, id: ""});
+  }
+
+  useEffect(() => {
+    if (cafeList.loading) {
+      return;
+    }
+
+    //Success and error message settings for alert
+    if (cafeList.response && !cafeList.errors) {
+      setAlertState({
+        ...alertState,
+        message: cafeList.response.message,
+        severity: "success",
+      });
+    } else if (cafeList.errors) {
+      setAlertState({
+        message: cafeList.errors,
+        severity: "error",
+        showAlert: true,
+      });
+    }
+  }, [cafeList]);
+
   useEffect(() => {
     dispatch(getCafeList(cafeParams));
   }, [cafeParams]);
   return (
     <>
+      <ConfirmModal open={openDeleteConfirmation.open} onConfirm={handleConfirm}/>
+      {alertState.showAlert===true && (
+        <AlertBox 
+          showAlert={alertState.showAlert}
+          message={alertState.message}
+          severity={alertState.severity}
+        />        
+      )}
       <h2>View Cafe</h2>
       <Box
         display={"flex"}
