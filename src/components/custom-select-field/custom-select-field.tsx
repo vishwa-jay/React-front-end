@@ -1,4 +1,3 @@
-import { MenuItem, Select } from "@mui/material";
 import { Field } from "react-final-form";
 
 interface CustomSelectFieldProps {
@@ -17,27 +16,25 @@ const CustomSelectField = (props: CustomSelectFieldProps) => {
   return (
     <>
       <label style={{ fontWeight: "bold" }}>{label}</label>
-      <Field name={name}>
+      <Field name={name} component="select">
         {(props) => (
-          <div>
-            <Select
+          <>
+            <select
               onChange={props.input.onChange}
-              fullWidth={textBoxFullWidth}
-              defaultValue={props.input.value}
-              sx={{ height: "40px"}}
+              value={props.input.value}
             >
               {optionList.map((item) => {
                 return (
-                  <MenuItem key={item.key} value={item.value}>
+                  <option key={item.key} value={item.value}>
                     {item.label}
-                  </MenuItem>
+                  </option>
                 );
               })}
-            </Select>
-            {props.meta.touched && props.meta.error && (
-              <span className="errorfield">{props.meta.error}</span>
-            )}
-          </div>
+              {props.meta.touched && props.meta.error && (
+                <span className="errorfield">{props.meta.error}</span>
+              )}
+            </select>
+          </>
         )}
       </Field>
     </>

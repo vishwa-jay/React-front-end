@@ -47,8 +47,7 @@ const EmployeeDetailsForm = (props: EmployeeDetailsFormProps) => {
   const dispatch = useDispatch();
 
   const employeeState = useSelector((state: AppState) => state.employee);
-  const [alertState, setAlertState] =
-    useState<AlertBoxProps>(defaultAlertValue);
+  const [alertState, setAlertState] = useState<AlertBoxProps>(defaultAlertValue);
 
   const selectedEmployee =
     employeeState.response && isEdit
@@ -64,7 +63,7 @@ const EmployeeDetailsForm = (props: EmployeeDetailsFormProps) => {
       gender: e.gender,
       phone: e.phone,
       email: e.email,
-      startdate: formatDate(e.startdate),
+      startdate: formatDate(e.startdate || new Date()),
       cafe_id: e.cafe_id || "",
     };
 
