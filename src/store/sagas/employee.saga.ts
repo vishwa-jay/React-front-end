@@ -1,10 +1,19 @@
 import { all, call, put, takeLatest } from "redux-saga/effects";
-import { CreateEmployeeAPI, GetEmployeeAPI, GetEmployeeByCafeAPI, UpdateEmployeeAPI } from "../../services/apiMethods";
+import { 
+  CreateEmployeeAPI, 
+  DeleteEmployeeAPI, 
+  GetEmployeeAPI, 
+  GetEmployeeByCafeAPI, 
+  UpdateEmployeeAPI 
+} from "../../services/employee.service";
 import {
   EmployeeActionTypes,
   createEmployee,
   createEmployeeFailed,
   createEmployeeSucceeded,
+  deleteEmployee,
+  deleteEmployeeFailed,
+  deleteEmployeeSucceeded,
   findEmployee,
   findEmployeeFailed,
   findEmployeeSucceeded,
@@ -82,6 +91,22 @@ function* UpdateEmployeeAPISaga( payload: ReturnType<typeof updateEmployee>): an
   }
 }
 
+/**
+ * Delete employee.
+ */
+function* DeleteEmployeeAPISaga( payload: ReturnType<typeof deleteEmployee>): any{
+  try {
+    const { data } = yield call(DeleteEmployeeAPI, payload.payload.employeeId);
+    yield put(
+      deleteEmployeeSucceeded({
+        payload: data,
+      })
+    );
+  } catch (e) {
+    yield put(deleteEmployeeFailed(e));
+  }
+}
+
 export default function* employeeSaga() {
   yield all([
     takeLatest(
@@ -99,6 +124,10 @@ export default function* employeeSaga() {
     takeLatest(
       EmployeeActionTypes.EMPLOYEE_UPDATE_REQUEST,
       UpdateEmployeeAPISaga
+    ),
+    takeLatest(
+      EmployeeActionTypes.EMPLOYEE_DELETE_REQUEST,
+      DeleteEmployeeAPISaga
     ),
   ]);
 }

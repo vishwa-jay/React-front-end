@@ -2,18 +2,23 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { AppState } from "../../../store/reducers/rootReducer";
 import { useEffect, useState } from "react";
-import { getEmployeeList } from "../../../store/actions/employeeAction";
+import { deleteEmployee, getEmployeeList } from "../../../store/actions/employeeAction";
 import { Box, Button, Pagination, Stack } from "@mui/material";
 import DataTable from "../../data-table/data-table.component";
 import { EDIT_EMPLOYEE_ROUTE } from "../../../constants/routes";
 import React from "react";
+import ConfirmModal from "../../modal/confirm-modal";
+import AlertBox, { AlertBoxProps } from "../../alert/alert-box";
+import { defaultAlertValue } from "../../../constants/common";
 
 const ViewEmployee = () => {
   const dispatch = useDispatch();
   const routeParams = useParams();
   const navigate = useNavigate();
   const employeeList = useSelector((state: AppState) => state.employee);
+  const [openDeleteConfirmation, setOpenDeleteConfirmation] = useState({open: false, id: ""});
   const [currentPage, setCurrentPage] = useState(1);
+  const [alertState, setAlertState] = useState<AlertBoxProps>(defaultAlertValue);
 
   const GoToEditEmployees = React.memo((value: any) => {
     return (
@@ -30,7 +35,7 @@ const ViewEmployee = () => {
 
   const DeleteEmployees = React.memo((value: any) => {
     return (
-      <Button variant="contained" color="error" size="small">
+      <Button variant="contained" color="error" size="small" onClick={() => setOpenDeleteConfirmation({open: true, id: value.data.id})}>
         Delete
       </Button>
     );
@@ -57,10 +62,40 @@ const ViewEmployee = () => {
       headerName: "Delete Employee",
       cellRenderer: DeleteEmployees,
     },
-  ]
+  ];
+
+  useEffect(() => {
+    if (employeeList.loading) {
+      return;
+    }
+
+    //Success and error message settings for alert
+    if (employeeList.response && !employeeList.errors) {
+      setAlertState({
+        ...alertState,
+        message: employeeList.response.message,
+        severity: "success",
+      });
+    } else if (employeeList.errors) {
+      setAlertState({
+        message: employeeList.errors,
+        severity: "error",
+        showAlert: true,
+      });
+    }
+  }, [employeeList]);
+
 
   const handlePageChange =(event: React.ChangeEvent<any>, page: number) =>{
     setCurrentPage(page);
+  }
+
+  const handleConfirm = (confirmation: boolean) =>{  
+    if(confirmation === true){
+      setAlertState({...alertState, showAlert: true});
+      dispatch(deleteEmployee(openDeleteConfirmation.id));
+    }
+    setOpenDeleteConfirmation({...openDeleteConfirmation, open: false, id: ""});
   }
 
   useEffect(() => {
@@ -69,6 +104,14 @@ const ViewEmployee = () => {
 
   return (
     <>
+    <ConfirmModal open={openDeleteConfirmation.open} onConfirm={handleConfirm}/>
+    {alertState.showAlert===true && (
+        <AlertBox 
+          showAlert={alertState.showAlert}
+          message={alertState.message}
+          severity={alertState.severity}
+        />        
+      )}
       <h2>View Employee</h2>
       <Box mb={1}>
         <Button

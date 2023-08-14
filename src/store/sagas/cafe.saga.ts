@@ -1,13 +1,39 @@
 import { all, call, put, takeLatest } from "redux-saga/effects";
-import { CreateCafeAPI, DeleteCafeAPI, GetAllCafeListAPI, GetCafeAPI, GetCafeListAPI, UpdateCafeAPI } from "../../services/apiMethods";
-import { CafeActionTypes, createCafe, createCafeFailed, createCafeSucceeded, deleteCafe, deleteCafeFailed, deleteCafeSucceeded, findCafe, findCafeFailed, findCafeSucceeded, getCafeAllListFailed, getCafeAllListSucceeded, getCafeList, getCafeListFailed, getCafeListSucceeded, updateCafe, updateCafeFailed, updateCafeSucceeded } from "../actions/cafeAction";
+import { 
+  CreateCafeAPI, 
+  DeleteCafeAPI, 
+  GetAllCafeListAPI, 
+  GetCafeAPI, 
+  GetPaginatedCafeListAPI, 
+  UpdateCafeAPI 
+} from "../../services/cafe.service";
+import { 
+  CafeActionTypes, 
+  createCafe, 
+  createCafeFailed, 
+  createCafeSucceeded, 
+  deleteCafe, 
+  deleteCafeFailed, 
+  deleteCafeSucceeded, 
+  findCafe, 
+  findCafeFailed, 
+  findCafeSucceeded, 
+  getCafeAllListFailed, 
+  getCafeAllListSucceeded, 
+  getCafeList, 
+  getCafeListFailed, 
+  getCafeListSucceeded, 
+  updateCafe, 
+  updateCafeFailed, 
+  updateCafeSucceeded 
+} from "../actions/cafeAction";
 
 /**
  * Get paginated cafe list.
  */
 function* GetCafeListAPISaga(payload: ReturnType<typeof getCafeList>) {
   try {
-    const { data } = yield call(GetCafeListAPI, payload.payload.location,payload.payload.page );
+    const { data } = yield call(GetPaginatedCafeListAPI, payload.payload.location,payload.payload.page );
     yield put(
       getCafeListSucceeded({
         payload: data,
@@ -85,7 +111,7 @@ function* UpdateCafeAPISaga( payload: ReturnType<typeof updateCafe>): any{
 /**
  * Delete cafe.
  */
-function* DeleteCafeAPISaga( payload: any): any{debugger
+function* DeleteCafeAPISaga( payload: ReturnType<typeof deleteCafe>): any{
   try {
     const { data } = yield call(DeleteCafeAPI, payload.payload.cafeId);
     yield put(

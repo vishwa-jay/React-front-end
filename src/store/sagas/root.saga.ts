@@ -1,4 +1,4 @@
-import { all} from "redux-saga/effects";
+import { all } from "redux-saga/effects";
 import cafeSaga from "./cafe.saga";
 import employeeSaga from "./employee.saga";
 

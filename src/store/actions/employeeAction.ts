@@ -15,6 +15,10 @@ export enum EmployeeActionTypes {
   EMPLOYEE_UPDATE_SUCCESS = "employee/EMPLOYEE_UPDATE_SUCCESS",
   EMPLOYEE_UPDATE_ERROR = "employee/EMPLOYEE_UPDATE_ERROR",
 
+  EMPLOYEE_DELETE_REQUEST = "employee/EMPLOYEE_DELETE_REQUEST",
+  EMPLOYEE_DELETE_SUCCESS = "employee/EMPLOYEE_DELETE_SUCCESS",
+  EMPLOYEE_DELETE_ERROR = "employee/EMPLOYEE_DELETE_ERROR",
+
   EMPLOYEE_FIND_REQUEST = "employee/EMPLOYEE_FIND_REQUEST",
   EMPLOYEE_FIND_SUCCESS = "employee/EMPLOYEE_FIND_SUCCESS",
   EMPLOYEE_FIND_ERROR = "employee/EMPLOYEE_FIND_ERROR",
@@ -78,4 +82,19 @@ export const updateEmployeeFailed = (payload: any) => ({
 export const updateEmployeeSucceeded = (action: any) => ({
   payload: action.payload,
   type: EmployeeActionTypes.EMPLOYEE_UPDATE_SUCCESS,
+});
+
+export const deleteEmployee = (employeeId: string) => ({
+  payload: { employeeId },
+  type: EmployeeActionTypes.EMPLOYEE_DELETE_REQUEST,
+});
+
+export const deleteEmployeeFailed = (payload: any) => ({
+  payload: payload,
+  type: EmployeeActionTypes.EMPLOYEE_DELETE_ERROR,
+});
+
+export const deleteEmployeeSucceeded = (action: any) => ({
+  payload: action.payload,
+  type: EmployeeActionTypes.EMPLOYEE_DELETE_SUCCESS,
 });

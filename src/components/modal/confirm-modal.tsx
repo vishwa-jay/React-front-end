@@ -15,7 +15,7 @@ const ConfirmModal = (props: ConfirmModalProps) => {
   const [open, setOpen] = useState(props.open);
 
   useEffect(()=>{
-    props.open == true ? setOpen(true): setOpen(false);
+    props.open === true ? setOpen(true): setOpen(false);
   },[props.open])
 
   const handleClose = () => {

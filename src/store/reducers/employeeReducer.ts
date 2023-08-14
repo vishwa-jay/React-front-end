@@ -50,6 +50,16 @@ const employeeReducer: Reducer<EmployeeState> = (state = initialState, action) =
     case EmployeeActionTypes.EMPLOYEE_UPDATE_ERROR: {
       return { ...state, loading: false, errors: action.payload.response.data.message };
     }
+    case EmployeeActionTypes.EMPLOYEE_DELETE_REQUEST: {
+      return { ...state, loading: true };
+    }
+    case EmployeeActionTypes.EMPLOYEE_DELETE_SUCCESS: {
+      console.log("action payload", action.payload);
+      return { ...state, loading: false, response: action.payload, errors: undefined };
+    }
+    case EmployeeActionTypes.EMPLOYEE_DELETE_ERROR: {
+      return { ...state, loading: false, errors: action.payload.response.data.message };
+    }
     default: {
       return state;
     }

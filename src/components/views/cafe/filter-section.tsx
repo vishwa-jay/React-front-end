@@ -7,14 +7,12 @@ import ClearIcon from "@mui/icons-material/Clear";
 export interface FilterProps {
   location: string;
 }
-
 interface FilterSectionProps {
   onSubmit: (e: FilterProps) => void;
 }
 
 const FilterSection = (props: FilterSectionProps) => {
-
-  const filter = (e: FilterProps) => {    
+  const filter = (e: FilterProps) => {
     props.onSubmit(e);
   };
 
